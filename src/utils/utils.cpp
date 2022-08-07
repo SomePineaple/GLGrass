@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <sstream>
+#include <chrono>
 
 char * Utils::readFileToString(const char * filename) {
   char * buffer = 0;
@@ -21,6 +22,10 @@ char * Utils::readFileToString(const char * filename) {
   }
 
   return buffer;
+}
+
+unsigned long Utils::currentTimeMillis() {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
 std::vector<Utils::Vertex> Utils::loadOBJ( std::istream& in ) {

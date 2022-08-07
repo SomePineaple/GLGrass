@@ -29,6 +29,9 @@ int main() {
 
   glClearColor(0.3, 0.5, 0.8, 1.0);
 
+  unsigned long fps = 0;
+  unsigned long lastFpsDisplay = 0;
+
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     glClear(GL_COLOR_BUFFER_BIT);
@@ -44,6 +47,13 @@ int main() {
     mainShader.unbind();
 
     glfwSwapBuffers(window);
+
+    fps++;
+    if ((Utils::currentTimeMillis() - lastFpsDisplay) > 1000) {
+      glfwSetWindowTitle(window, std::to_string(fps).c_str());
+      fps = 0;
+      lastFpsDisplay = Utils::currentTimeMillis();
+    }
   }
   return EXIT_SUCCESS;
 }

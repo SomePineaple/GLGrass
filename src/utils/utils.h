@@ -7,6 +7,7 @@
 
 namespace Utils {
   char * readFileToString(const char *);
+  unsigned long currentTimeMillis();
 
   struct Vertex {
     glm::vec3 position;
