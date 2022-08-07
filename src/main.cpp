@@ -32,9 +32,12 @@ int main() {
   unsigned long fps = 0;
   unsigned long lastFpsDisplay = 0;
 
+  glEnable(GL_DEPTH_TEST);
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Render floor
     mainShader.bind();
     mainShader.setMat4(projectionLocation, mainCamera.getProjectionMatrix());
     mainShader.setMat4(viewLocation, mainCamera.getViewMatrix());
@@ -45,6 +48,8 @@ int main() {
 
     floorMesh.unbind();
     mainShader.unbind();
+
+    // Render grass now
 
     glfwSwapBuffers(window);
 
