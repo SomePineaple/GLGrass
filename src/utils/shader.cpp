@@ -37,7 +37,6 @@ unsigned int Shader::createShader(const char * path, unsigned int type) {
   unsigned int shaderID = glCreateShader(type);
   glShaderSource(shaderID, 1, &source, nullptr);
   glCompileShader(shaderID);
-  free(source);
 
   int success;
   glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
@@ -47,8 +46,11 @@ unsigned int Shader::createShader(const char * path, unsigned int type) {
     char * infoLog = (char *) malloc(logLength);
     glGetShaderInfoLog(shaderID, logLength, &logLength, infoLog);
     std::cerr << "ERROR: Failed to compile shader: " << infoLog << std::endl;
+    std::cerr << source;
     free(infoLog);
   }
+
+  free(source);
 
   return shaderID;
 }

@@ -9,9 +9,9 @@ GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float sc
   projectionMatrixUBO = grassShader.getUniformLocation("projMatrix");
   viewMatrixUBO = grassShader.getUniformLocation("viewMatrix");
   
-  for (float y = grassStart.y; y < grassStop.y; y += scarcity) {
+  for (float z = grassStart.y; z < grassStop.y; z += scarcity) {
     for (float x = grassStart.x; x < grassStop.x; x += scarcity) {
-      grassPositions.push_back(glm::vec3(x, y, 0));
+      grassPositions.push_back(glm::vec3(x, 0, z));
     }
   }
 
