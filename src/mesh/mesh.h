@@ -7,6 +7,7 @@ class Mesh {
 public:
   Mesh(const char * objPath);
   void bind();
+  void render();
   void unbind();
 private:
   std::vector<Utils::Vertex> verticies;

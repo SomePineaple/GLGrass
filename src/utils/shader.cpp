@@ -3,6 +3,7 @@
 #include <GL/gl3w.h>
 #include <cstdlib>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "utils.h"
 
@@ -50,4 +51,20 @@ unsigned int Shader::createShader(const char * path, unsigned int type) {
   }
 
   return shaderID;
+}
+
+unsigned int Shader::getUniformLocation(const char * uniformName) {
+  return glGetUniformLocation(shaderProgramID, uniformName);
+}
+
+void Shader::setMat4(unsigned int uniformLocation, glm::mat4 mat) {
+  glUniformMatrix4fv(uniformLocation, 1, false, glm::value_ptr(mat));
+}
+
+void Shader::bind() {
+  glUseProgram(shaderProgramID);
+}
+
+void Shader::unbind() {
+  glUseProgram(0);
 }

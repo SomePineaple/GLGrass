@@ -29,6 +29,10 @@ void Mesh::bind() {
   glEnableVertexAttribArray(1);
 }
 
+void Mesh::render() {
+  glDrawArrays(GL_TRIANGLES, 0, verticies.size());
+}
+
 void Mesh::unbind() {
   glDisableVertexAttribArray(1);
   glDisableVertexAttribArray(0);
