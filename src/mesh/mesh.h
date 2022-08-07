@@ -8,6 +8,7 @@ public:
   Mesh(const char * objPath);
   void bind();
   void render();
+  void renderInstanced(unsigned int instanceCount);
   void unbind();
 private:
   std::vector<Utils::Vertex> verticies;

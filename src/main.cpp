@@ -5,12 +5,16 @@
 #include "utils/shader.h"
 #include "mesh/mesh.h"
 #include "math/camera.h"
+#include "grassRenderer.h"
 
 int main() {
   if (!glfwInit()) {
     std::cerr << "Failed to init GLFW" << std::endl;
     return EXIT_FAILURE;
   }
+
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
   GLFWwindow * window = glfwCreateWindow(800, 800, "GLGrass", nullptr, nullptr);
   glfwMakeContextCurrent(window);
@@ -22,6 +26,7 @@ int main() {
 
   Shader mainShader("assets/mainVertex.glsl", "assets/mainFragment.glsl");
   Mesh floorMesh("assets/plane.obj");
+  GrassRenderer grassRenderer(glm::vec2(-100, -100), glm::vec2(100, 100), 0.2);
   Camera mainCamera(glm::vec3(-1, 1, 0), glm::vec3(1, 0, 0), 800, 800);
 
   unsigned int projectionLocation = mainShader.getUniformLocation("projMatrix");
@@ -50,6 +55,7 @@ int main() {
     mainShader.unbind();
 
     // Render grass now
+    grassRenderer.renderGrass(mainCamera);
 
     glfwSwapBuffers(window);
 

@@ -33,6 +33,10 @@ void Mesh::render() {
   glDrawArrays(GL_TRIANGLES, 0, verticies.size());
 }
 
+void Mesh::renderInstanced(unsigned int instanceCount) {
+  glDrawArraysInstanced(GL_TRIANGLES, 0, verticies.size(), instanceCount);
+}
+
 void Mesh::unbind() {
   glDisableVertexAttribArray(1);
   glDisableVertexAttribArray(0);
