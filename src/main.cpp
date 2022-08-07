@@ -1,7 +1,9 @@
 #include <iostream>
-
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
+
+#include "utils/shader.h"
+#include "mesh/mesh.h"
 
 int main() {
   if (!glfwInit()) {
@@ -16,6 +18,8 @@ int main() {
     std::cerr << "Failed to init gl3w" << std::endl;
     return EXIT_FAILURE;
   }
+
+  Shader mainShader("assets/mainVertex.glsl", "assets/mainFragment.glsl");
 
   glClearColor(0.3, 0.5, 0.8, 1.0);
 

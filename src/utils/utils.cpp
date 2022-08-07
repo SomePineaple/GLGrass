@@ -27,7 +27,6 @@ std::vector<Utils::Vertex> Utils::loadOBJ( std::istream& in ) {
   std::vector<Vertex> verts;
 
   std::vector< glm::vec4 > positions( 1, glm::vec4( 0, 0, 0, 0 ) );
-  std::vector< glm::vec3 > texcoords( 1, glm::vec3( 0, 0, 0 ) );
   std::vector< glm::vec3 > normals( 1, glm::vec3( 0, 0, 0 ) );
   std::string lineStr;
   while( std::getline( in, lineStr ) ) {
@@ -41,14 +40,6 @@ std::vector<Utils::Vertex> Utils::loadOBJ( std::istream& in ) {
         float x = 0, y = 0, z = 0, w = 1;
         lineSS >> x >> y >> z >> w;
         positions.push_back( glm::vec4( x, y, z, w ) );
-    }
-
-    // texture
-    if( lineType == "vt" )
-    {
-        float u = 0, v = 0, w = 0;
-        lineSS >> u >> v >> w;
-        texcoords.push_back( glm::vec3( u, v, w ) );
     }
 
     // normal
@@ -73,7 +64,6 @@ std::vector<Utils::Vertex> Utils::loadOBJ( std::istream& in ) {
         int vt = atoi( vtStr.c_str() );
         int vn = atoi( vnStr.c_str() );
         v  = (  v >= 0 ?  v : positions.size() +  v );
-        vt = ( vt >= 0 ? vt : texcoords.size() + vt );
         vn = ( vn >= 0 ? vn : normals.size()   + vn );
         refs.push_back( VertRef( v, vt, vn ) );
       }
@@ -90,7 +80,6 @@ std::vector<Utils::Vertex> Utils::loadOBJ( std::istream& in ) {
         for( size_t j = 0; j < 3; ++j ) {
           Vertex vert;
           vert.position = glm::vec3( positions[ p[j]->v ] );
-          vert.texcoord = glm::vec2( texcoords[ p[j]->vt ] );
           vert.normal = ( p[j]->vn != 0 ? normals[ p[j]->vn ] : faceNormal );
           verts.push_back( vert );
         }
