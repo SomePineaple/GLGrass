@@ -55,7 +55,9 @@ int main() {
 
     fps++;
     if ((Utils::currentTimeMillis() - lastFpsDisplay) > 1000) {
-      glfwSetWindowTitle(window, std::to_string(fps).c_str());
+      std::string title = "OpenGL Grass | FPS: ";
+      title += std::to_string(fps);
+      glfwSetWindowTitle(window, title.c_str());
       fps = 0;
       lastFpsDisplay = Utils::currentTimeMillis();
     }
