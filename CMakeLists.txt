@@ -4,6 +4,7 @@ project(glgrass)
 
 add_subdirectory("dependencies/glfw")
 add_subdirectory("dependencies/glm")
+add_subdirectory("dependencies/gl3w")
 
 add_executable(glgrass src/main.cpp)
-target_link_libraries(glgrass PUBLIC glfw glm)
+target_link_libraries(glgrass PUBLIC glfw glm gl3w)
