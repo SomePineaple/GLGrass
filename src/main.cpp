@@ -26,8 +26,8 @@ int main() {
 
   Shader mainShader("assets/mainVertex.glsl", "assets/mainFragment.glsl");
   Mesh floorMesh("assets/plane.obj");
-  GrassRenderer grassRenderer(glm::vec2(-20, -2), glm::vec2(20, 20), 0.005);
-  Camera mainCamera(glm::vec3(0, 0.3, 0), glm::vec3(1, 0, 0), 1000, 1000);
+  GrassRenderer grassRenderer(glm::vec2(0, 0), glm::vec2(100, 100), 0.005);
+  Camera mainCamera(glm::vec3(50, 0.3, 50), glm::vec3(1, 0, 0), 1000, 1000);
 
   unsigned int projectionLocation = mainShader.getUniformLocation("projMatrix");
   unsigned int viewLocation = mainShader.getUniformLocation("viewMatrix");
@@ -48,7 +48,7 @@ int main() {
     // Render floor
     mainShader.bind();
     mainShader.setMat4(projectionLocation, mainCamera.getProjectionMatrix());
-    mainShader.setMat4(viewLocation, mainCamera.getViewMatrix());
+    mainShader.setMat4(viewLocation, Camera(glm::vec3(0, mainCamera.getPosition().y, 0), mainCamera.getDirection(), 1000, 1000).getViewMatrix());
 
     floorMesh.bind();
 

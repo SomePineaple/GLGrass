@@ -4,7 +4,7 @@ in vec3 vertexNormal;
 
 out vec4 FragColor;
 
-const vec3 dirtColor = vec3(104.0/255.0, 65.0/255.0, 29.0/255.0);
+const vec3 dirtColor = vec3(0.37, 0.87, 0.17);
 
 void main() {
   FragColor = vec4(dirtColor, 1);
