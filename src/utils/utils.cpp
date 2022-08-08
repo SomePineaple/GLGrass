@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <chrono>
+#include <random>
 
 char * Utils::readFileToString(const char * filename) {
   char * buffer = 0;
@@ -26,6 +27,13 @@ char * Utils::readFileToString(const char * filename) {
 
 unsigned long Utils::currentTimeMillis() {
   return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
+
+float Utils::randFloat(float min, float max) {
+  std::random_device rd;
+  std::default_random_engine eng(rd());
+  std::uniform_real_distribution<float> distr(min, max);
+  return distr(eng);
 }
 
 std::vector<Utils::Vertex> Utils::loadOBJ( std::istream& in ) {

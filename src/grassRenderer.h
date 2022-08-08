@@ -20,7 +20,7 @@ private:
 
   Mesh grassMesh;
   
-  std::vector<glm::vec3> grassPositions;
+  std::vector<glm::vec2> grassPositions;
 };
 
 #endif // GRASSRENDERER_H

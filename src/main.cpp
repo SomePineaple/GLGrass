@@ -26,8 +26,8 @@ int main() {
 
   Shader mainShader("assets/mainVertex.glsl", "assets/mainFragment.glsl");
   Mesh floorMesh("assets/plane.obj");
-  GrassRenderer grassRenderer(glm::vec2(-100, -100), glm::vec2(100, 100), 0.2);
-  Camera mainCamera(glm::vec3(-1, 1, 0), glm::vec3(1, 0, 0), 800, 800);
+  GrassRenderer grassRenderer(glm::vec2(-10, -10), glm::vec2(5, 5), 0.005);
+  Camera mainCamera(glm::vec3(-1, 0.3, 0), glm::vec3(1, 0, 0), 800, 800);
 
   unsigned int projectionLocation = mainShader.getUniformLocation("projMatrix");
   unsigned int viewLocation = mainShader.getUniformLocation("viewMatrix");
