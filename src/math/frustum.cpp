@@ -5,7 +5,7 @@ Frustum createFrustumFromCamera(const Camera &cam, float zNear, float zFar) {
 
   const glm::vec3 cameraPos = cam.getPosition();
   const glm::vec3 cameraDir = cam.getDirection();
-  const glm::vec3 cameraRight = cam.getRightVector();
+  const glm::vec3 cameraRight = -cam.getRightVector();
 
   const float halfVSide = zFar * tanf(CAMERA_FOV * 0.5f);
   const float halfHSide = halfVSide * cam.getAspect();

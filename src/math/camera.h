@@ -6,9 +6,9 @@
 
 #define CAMERA_UP glm::vec3(0.0, 1.0, 0.0)
 #define CAMERA_FOV 90.0f
-#define CAMERA_ZNEAR 0.1f
+#define CAMERA_ZNEAR 0.001f
 #define CAMERA_ZFAR 100.0f
-#define CAMERA_SPEED 0.1f;
+#define CAMERA_SPEED 0.03f;
 
 class Camera {
 public:
