@@ -7,6 +7,9 @@
 #include "utils/shader.h"
 #include "math/camera.h"
 #include "mesh/mesh.h"
+#include "utils/grassChunk.h"
+
+#define GRASS_CHUNK_SIZE 10.0f
 
 class GrassRenderer {
 public:
@@ -20,7 +23,7 @@ private:
 
   Mesh grassMesh;
   
-  std::vector<glm::vec2> grassPositions;
+  std::vector<GrassChunk> grassChunks;
 };
 
 #endif // GRASSRENDERER_H

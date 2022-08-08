@@ -1,9 +1,9 @@
 #include "grassChunk.h"
 
-#include <random>
 #include <GL/gl3w.h>
 
-GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity) {
+GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity) 
+    : chunkBoundingBox(glm::vec3(grassStart.x, 0, grassStart.y), glm::vec3(grassStop.x, 0.06, grassStop.y)) {
   std::random_device rd;
   std::default_random_engine eng(rd());
   std::uniform_real_distribution<float> distr(-scarcity/2.0f, scarcity/2.0f);
@@ -21,7 +21,10 @@ GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
-void GrassChunk::render(const Mesh &grassMesh) {
+void GrassChunk::render(const Mesh &grassMesh, const Frustum &camFrustum) {
+  if (!chunkBoundingBox.isOnFrustum(camFrustum))
+    return;
+
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
   grassMesh.renderInstanced(grassPositions.size());
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
