@@ -23,21 +23,21 @@ Mesh::Mesh(const char * objPath) {
   unbind();
 }
 
-void Mesh::bind() {
+void Mesh::bind() const {
   glBindVertexArray(vaoID);
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
 }
 
-void Mesh::render() {
+void Mesh::render() const {
   glDrawArrays(GL_TRIANGLES, 0, verticies.size());
 }
 
-void Mesh::renderInstanced(unsigned int instanceCount) {
+void Mesh::renderInstanced(unsigned int instanceCount) const {
   glDrawArraysInstanced(GL_TRIANGLES, 0, verticies.size(), instanceCount);
 }
 
-void Mesh::unbind() {
+void Mesh::unbind() const {
   glDisableVertexAttribArray(1);
   glDisableVertexAttribArray(0);
   glBindVertexArray(0);

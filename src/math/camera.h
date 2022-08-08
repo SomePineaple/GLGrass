@@ -8,8 +8,8 @@
 class Camera {
 public:
   Camera(glm::vec3 position, glm::vec3 rotation, int width, int height);
-  glm::mat4 getProjectionMatrix();
-  glm::mat4 getViewMatrix();
+  glm::mat4 getProjectionMatrix() const;
+  glm::mat4 getViewMatrix() const;
 private:
   glm::vec3 position, rotation;
   int width, height;

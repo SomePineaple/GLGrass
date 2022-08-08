@@ -6,10 +6,10 @@
 class Mesh {
 public:
   Mesh(const char * objPath);
-  void bind();
-  void render();
-  void renderInstanced(unsigned int instanceCount);
-  void unbind();
+  void bind() const;
+  void render() const;
+  void renderInstanced(unsigned int instanceCount) const;
+  void unbind() const;
 private:
   std::vector<Utils::Vertex> verticies;
   unsigned int vaoID;

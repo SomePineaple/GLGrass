@@ -1,14 +1,9 @@
-#include "grassRenderer.h"
+#include "grassChunk.h"
 
-#include <GL/gl3w.h>
 #include <random>
+#include <GL/gl3w.h>
 
-GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity) : 
-  grassShader("assets/grassVertex.glsl", "assets/grassFragment.glsl"), grassMesh("assets/grass.obj") {
-
-  projectionMatrixUBO = grassShader.getUniformLocation("projMatrix");
-  viewMatrixUBO = grassShader.getUniformLocation("viewMatrix");
-
+GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity) {
   std::random_device rd;
   std::default_random_engine eng(rd());
   std::uniform_real_distribution<float> distr(-scarcity/2.0f, scarcity/2.0f);
@@ -26,15 +21,8 @@ GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float sc
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
-void GrassRenderer::renderGrass(const Camera &camera) {
-  grassShader.bind();
-  grassShader.setMat4(projectionMatrixUBO, camera.getProjectionMatrix());
-  grassShader.setMat4(viewMatrixUBO, camera.getViewMatrix());
-
+void GrassChunk::render(const Mesh &grassMesh) {
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
-  grassMesh.bind();
   grassMesh.renderInstanced(grassPositions.size());
-  grassMesh.unbind();
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-  grassShader.unbind();
 }

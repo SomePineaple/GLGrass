@@ -11,7 +11,7 @@
 class GrassRenderer {
 public:
   GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity);
-  void renderGrass(Camera &camera);
+  void renderGrass(const Camera &camera);
 private:
   Shader grassShader;
   unsigned int positionsSSBO;
