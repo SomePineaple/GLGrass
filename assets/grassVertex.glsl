@@ -7,8 +7,8 @@ layout (std430, binding = 0) buffer positionsBuffer {
 };
 
 const vec2 windDirection = normalize(vec2(0.2, 0.5));
-const float windSpeed = 10.0;
-const float windDisplacement = 0.04;
+const float windSpeed = 0.1;
+const float windDisplacement = 0.02;
 
 uniform mat4 projMatrix;
 uniform mat4 viewMatrix;
@@ -29,6 +29,10 @@ float rand(vec2 co){
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
+float getDisplacementMap(vec2 grassPosition) {
+  return abs(sin((grassPosition.x * windDirection.x + grassPosition.y * windDirection.y) + windSpeed * time))*1.3 + (sin(time * 10 + rand(grassPosition) * 40) * 0.03);
+}
+
 void main() {
   vec2 grassPosition = grassPositions[gl_InstanceID].xy;
 
@@ -42,7 +46,7 @@ void main() {
 
   height = position.y / 0.06;
 
-  vec2 displacement = clamp(sin((grassPosition.x * windDirection.x + grassPosition.y * windDirection.y) + windSpeed * time), 0, 1) * windDirection;
+  vec2 displacement = getDisplacementMap(grassPosition) * windDirection;
   finalPosition += vec3(displacement.x + localWindVariance, 0, displacement.y + localWindVariance) * (height*height) * windDisplacement;
 
   gl_Position = projMatrix * viewMatrix * vec4(finalPosition, 1.0);
