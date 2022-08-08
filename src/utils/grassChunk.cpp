@@ -1,31 +1,31 @@
 #include "grassChunk.h"
 
-#include <GL/gl3w.h>
-
 GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity) 
-    : chunkBoundingBox(glm::vec3(grassStart.x, 0, grassStart.y), glm::vec3(grassStop.x, 0.06, grassStop.y)) {
+    : chunkBoundingBox(glm::vec3(grassStart.x, 0, grassStart.y), glm::vec3(grassStop.x, 1, grassStop.y)) {
   std::random_device rd;
   std::default_random_engine eng(rd());
   std::uniform_real_distribution<float> distr(-scarcity/2.0f, scarcity/2.0f);
+
+  const glm::vec2 area = glm::abs(grassStop - grassStart);
+  numGrassBlades = (area.x / scarcity) * (area.y / scarcity);
+
+  grassPositions = new glm::vec2[numGrassBlades];
   
+  unsigned int bladeNumber = 0;
   for (float y = grassStart.y; y < grassStop.y; y += scarcity) {
     for (float x = grassStart.x; x < grassStop.x; x += scarcity) {
-      grassPositions.push_back(glm::vec2(x + distr(eng), y + distr(eng)));
+      grassPositions[bladeNumber] = glm::vec2(x + distr(eng), y + distr(eng));
+      bladeNumber++;
+      if (bladeNumber >= numGrassBlades)
+        return;
     }
   }
-
-  glGenBuffers(1, &positionsSSBO);
-  glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
-  glBufferData(GL_SHADER_STORAGE_BUFFER, grassPositions.size() * sizeof(glm::vec2), grassPositions.data(), GL_STATIC_DRAW);
-  glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, positionsSSBO);
-  glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 void GrassChunk::render(const Mesh &grassMesh, const Frustum &camFrustum) {
   if (!chunkBoundingBox.isOnFrustum(camFrustum))
     return;
 
-  glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
-  grassMesh.renderInstanced(grassPositions.size());
-  glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+  glBufferData(GL_SHADER_STORAGE_BUFFER, numGrassBlades * sizeof(glm::vec2), grassPositions, GL_STATIC_DRAW);
+  grassMesh.renderInstanced(numGrassBlades);
 }

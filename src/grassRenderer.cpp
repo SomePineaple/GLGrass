@@ -1,7 +1,5 @@
 #include "grassRenderer.h"
 
-#include <GL/gl3w.h>
-
 GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity) : 
   grassShader("assets/grassVertex.glsl", "assets/grassFragment.glsl"), grassMesh("assets/grass.obj") {
 
@@ -15,20 +13,25 @@ GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float sc
   }
 
   std::cout << "Num chunks: " << grassChunks.size() << std::endl;
+
+  glGenBuffers(1, &positionsSSBO);
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
+  glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, positionsSSBO);
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 void GrassRenderer::renderGrass(const Camera &camera) {
-  Frustum camFrustum = createFrustumFromCamera(camera, CAMERA_ZNEAR, CAMERA_ZFAR);
+  Frustum camFrustum = createFrustumFromCamera(camera, CAMERA_ZNEAR, 100.0f);
 
   grassShader.bind();
   grassShader.setMat4(projectionMatrixUBO, camera.getProjectionMatrix());
   grassShader.setMat4(viewMatrixUBO, camera.getViewMatrix());
 
-  glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
   grassMesh.bind();
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);
   for (GrassChunk chunk : grassChunks)
     chunk.render(grassMesh, camFrustum);
-  grassMesh.unbind();
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+  grassMesh.unbind();
   grassShader.unbind();
 }

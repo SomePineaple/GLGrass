@@ -1,6 +1,7 @@
 #ifndef GRASSRENDERER_H
 #define GRASSRENDERER_H
 
+#include <GL/gl3w.h>
 #include <vector>
 #include <glm/glm.hpp>
 
@@ -9,7 +10,9 @@
 #include "mesh/mesh.h"
 #include "utils/grassChunk.h"
 
-#define GRASS_CHUNK_SIZE 10.0f
+#define GRASS_CHUNK_SIZE 2.0f
+
+#define DEBUG_RENDER_CAMERA Camera(glm::vec3(0, 100, 0), glm::vec3(0, -1, 0), 800, 800)
 
 class GrassRenderer {
 public:

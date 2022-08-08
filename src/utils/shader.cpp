@@ -33,9 +33,10 @@ Shader::Shader(const char * vertPath, const char * fragPath) {
 }
 
 unsigned int Shader::createShader(const char * path, unsigned int type) {
-  char * source = Utils::readFileToString(path);
+  std::string source = Utils::readFileToString(path);
+  const char * cSource = source.c_str();
   unsigned int shaderID = glCreateShader(type);
-  glShaderSource(shaderID, 1, &source, nullptr);
+  glShaderSource(shaderID, 1, &cSource, nullptr);
   glCompileShader(shaderID);
 
   int success;
@@ -49,8 +50,6 @@ unsigned int Shader::createShader(const char * path, unsigned int type) {
     std::cerr << source;
     free(infoLog);
   }
-
-  free(source);
 
   return shaderID;
 }

@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace Utils {
-  char * readFileToString(const char *);
+  std::string readFileToString(const char *);
   unsigned long currentTimeMillis();
   float randFloat(float min, float max);
 

@@ -3,26 +3,20 @@
 #include <cstdio>
 #include <cstdlib>
 #include <sstream>
+#include <fstream>
 #include <chrono>
 #include <random>
 
-char * Utils::readFileToString(const char * filename) {
-  char * buffer = 0;
-  long length;
-  FILE * f = fopen(filename, "rb");
-
-  if (f) {
-    fseek(f, 0, SEEK_END);
-    length = ftell (f);
-    fseek(f, 0, SEEK_SET);
-    buffer = (char *) malloc(length);
-    if (buffer) {
-      fread(buffer, 1, length, f);
-    }
-    fclose(f);
+std::string Utils::readFileToString(const char * filename) {
+  std::ifstream input_file(filename);
+  if (!input_file.is_open()) {
+    std::cerr << "Could not open the file - '"
+              << filename << "'" << std::endl;
+    exit(EXIT_FAILURE);
   }
 
-  return buffer;
+  std::string contents((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+  return contents;
 }
 
 unsigned long Utils::currentTimeMillis() {

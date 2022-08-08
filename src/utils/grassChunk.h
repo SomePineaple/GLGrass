@@ -1,6 +1,7 @@
 #ifndef GRASSCHUNK_H
 #define GRASSCHUNK_H
 
+#include <GL/gl3w.h>
 #include <glm/glm.hpp>
 #include <vector>
 #include <random>
@@ -14,9 +15,9 @@ public:
   GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity);
   void render(const Mesh &grassMesh, const Frustum &camFrustum);
 private:
-  std::vector<glm::vec2> grassPositions;
-  unsigned int positionsSSBO;
+  unsigned int numGrassBlades;
   AABB chunkBoundingBox;
+  glm::vec2 * grassPositions;
 };
 
 #endif // GRASSCHUNK_H

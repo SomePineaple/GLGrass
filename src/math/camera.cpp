@@ -9,6 +9,17 @@ Camera::Camera(glm::vec3 position, glm::vec3 direction, int width, int height) {
   this->height = height;
 }
 
+void Camera::updateCameraPosition(GLFWwindow *window) {
+  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    position += direction * CAMERA_SPEED;
+  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    position -= direction * CAMERA_SPEED;
+  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    position -= glm::normalize(glm::cross(direction, CAMERA_UP)) * CAMERA_SPEED;
+  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    position += glm::normalize(glm::cross(direction, CAMERA_UP)) * CAMERA_SPEED;
+}
+
 glm::mat4 Camera::getProjectionMatrix() const {
   return glm::perspectiveFov(CAMERA_FOV, (float) width, (float) height, CAMERA_ZNEAR, CAMERA_ZFAR);
 }
