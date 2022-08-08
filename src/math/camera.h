@@ -15,6 +15,7 @@ public:
   Camera(glm::vec3 position, glm::vec3 direction, int width, int height);
 
   void updateCameraPosition(GLFWwindow *window);
+  void updateSize(int width, int height);
 
   glm::mat4 getProjectionMatrix() const;
   glm::mat4 getViewMatrix() const;

@@ -16,7 +16,7 @@ int main() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-  GLFWwindow * window = glfwCreateWindow(800, 800, "GLGrass", nullptr, nullptr);
+  GLFWwindow * window = glfwCreateWindow(1000, 1000, "GLGrass", nullptr, nullptr);
   glfwMakeContextCurrent(window);
 
   if (gl3wInit()) {
@@ -27,7 +27,7 @@ int main() {
   Shader mainShader("assets/mainVertex.glsl", "assets/mainFragment.glsl");
   Mesh floorMesh("assets/plane.obj");
   GrassRenderer grassRenderer(glm::vec2(-20, -2), glm::vec2(20, 20), 0.005);
-  Camera mainCamera(glm::vec3(0, 0.1, 0), glm::vec3(1, 0, 0), 800, 800);
+  Camera mainCamera(glm::vec3(0, 0.3, 0), glm::vec3(1, 0, 0), 1000, 1000);
 
   unsigned int projectionLocation = mainShader.getUniformLocation("projMatrix");
   unsigned int viewLocation = mainShader.getUniformLocation("viewMatrix");

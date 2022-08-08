@@ -20,6 +20,11 @@ void Camera::updateCameraPosition(GLFWwindow *window) {
     position += glm::normalize(glm::cross(direction, CAMERA_UP)) * CAMERA_SPEED;
 }
 
+void Camera::updateSize(int width, int height) {
+  this->width = width;
+  this->height = height;
+}
+
 glm::mat4 Camera::getProjectionMatrix() const {
   return glm::perspectiveFov(CAMERA_FOV, (float) width, (float) height, CAMERA_ZNEAR, CAMERA_ZFAR);
 }
