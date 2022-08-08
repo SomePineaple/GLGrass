@@ -6,15 +6,44 @@ layout (std430, binding = 0) buffer positionsBuffer {
   vec2 grassPositions[];
 };
 
+const vec2 windDirection = normalize(vec2(0.2, 0.5));
+const float windSpeed = 10.0;
+const float windDisplacement = 0.04;
+
 uniform mat4 projMatrix;
 uniform mat4 viewMatrix;
 
+uniform float time;
+
 out float height;
 
-void main() {
-  vec2 grassPosition = grassPositions[gl_InstanceID];
 
-  gl_Position = projMatrix * viewMatrix * vec4(position.x + grassPosition.x, position.y, position.z + grassPosition.y, 1.0);
+mat4 rotationY( in float angle ) {
+	return mat4(cos(angle), 0,      sin(angle),	0,
+			 				0,		      1.0,	  0,	        0,
+					   -sin(angle),	0,		  cos(angle),	0,
+							0, 		      0,			0,	        1);
+}
+
+float rand(vec2 co){
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+  vec2 grassPosition = grassPositions[gl_InstanceID].xy;
+
+  float random = rand(grassPosition);
+
+  float localWindVariance = random * 0.5;
+  float rotation = rand(grassPosition + vec2(5)) * 360.0;
+
+  vec3 localPos = (rotationY(rotation) * vec4(position, 1.0)).xyz;
+  vec3 finalPosition = vec3(localPos.x + grassPosition.x, localPos.y, localPos.z + grassPosition.y);
 
   height = position.y / 0.06;
+
+  vec2 displacement = clamp(sin((grassPosition.x * windDirection.x + grassPosition.y * windDirection.y) + windSpeed * time), 0, 1) * windDirection;
+  finalPosition += vec3(displacement.x + localWindVariance, 0, displacement.y + localWindVariance) * (height*height) * windDisplacement;
+
+  gl_Position = projMatrix * viewMatrix * vec4(finalPosition, 1.0);
 }

@@ -9,6 +9,7 @@ public:
 
   unsigned int getUniformLocation(const char * uniformName);
   void setMat4(unsigned int uniformLocation, glm::mat4 mat);
+  void setFloat(unsigned int uniformLocation, float value);
 
   void bind();
   void unbind();

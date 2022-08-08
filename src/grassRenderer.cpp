@@ -5,6 +5,9 @@ GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float sc
 
   projectionMatrixUBO = grassShader.getUniformLocation("projMatrix");
   viewMatrixUBO = grassShader.getUniformLocation("viewMatrix");
+  timeUBO = grassShader.getUniformLocation("time");
+
+  startTime = Utils::currentTimeMillis();
   
   for (float y = grassStart.y; y < grassStop.y; y += GRASS_CHUNK_SIZE) {
     for (float x = grassStart.x; x < grassStop.x; x += GRASS_CHUNK_SIZE) {
@@ -26,6 +29,7 @@ void GrassRenderer::renderGrass(const Camera &camera) {
   grassShader.bind();
   grassShader.setMat4(projectionMatrixUBO, camera.getProjectionMatrix());
   grassShader.setMat4(viewMatrixUBO, camera.getViewMatrix());
+  grassShader.setFloat(timeUBO, (Utils::currentTimeMillis() - startTime) / 1000.0f);
 
   grassMesh.bind();
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, positionsSSBO);

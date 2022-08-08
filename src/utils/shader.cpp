@@ -62,6 +62,10 @@ void Shader::setMat4(unsigned int uniformLocation, glm::mat4 mat) {
   glUniformMatrix4fv(uniformLocation, 1, false, glm::value_ptr(mat));
 }
 
+void Shader::setFloat(unsigned int uniformLocation, float value) {
+  glUniform1f(uniformLocation, value);
+}
+
 void Shader::bind() {
   glUseProgram(shaderProgramID);
 }
