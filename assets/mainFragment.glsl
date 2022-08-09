@@ -10,11 +10,9 @@ struct FogParameters {
   bool isEnabled;
 };
 
-float getFogFactor(FogParameters params, float fogCoordinate)
-{
+float getFogFactor(FogParameters params, float fogCoordinate) {
   float result = 0.0;
-  if(params.equation == 0)
-  {
+  if(params.equation == 0) {
     float fogLength = params.linearEnd - params.linearStart;
     result = (params.linearEnd - fogCoordinate) / fogLength;
   }
@@ -38,9 +36,9 @@ const vec3 dirtColor = vec3(0, 0.2, 0);
 
 const FogParameters fogParams = {
   vec3(1),
-  5.0,
   7.0,
-  1.0,
+  10.0,
+  0.7,
   1,
   true
 };
