@@ -22,6 +22,13 @@ GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity
   }
 }
 
+float GrassChunk::getDistanceFromCamera(const glm::vec3 &cameraPos) const {
+  const float distX = cameraPos.x - chunkBoundingBox.center.x;
+  const float distY = cameraPos.y - chunkBoundingBox.center.y;
+  const float distZ = cameraPos.z - chunkBoundingBox.center.z;
+  return sqrtf(distX*distX + distY*distY + distZ*distZ);
+}
+
 void GrassChunk::render(const Mesh &grassMesh, const Frustum &camFrustum) {
   if (!chunkBoundingBox.isOnFrustum(camFrustum))
     return;

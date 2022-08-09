@@ -10,9 +10,8 @@
 #include "mesh/mesh.h"
 #include "utils/grassChunk.h"
 
-#define GRASS_CHUNK_SIZE 0.1f
-
-#define DEBUG_RENDER_CAMERA Camera(glm::vec3(0, 100, 0), glm::vec3(0, -1, 0), 800, 800)
+#define GRASS_CHUNK_SIZE 0.5f
+#define GRASS_LOD_CUTOFF_DISTANCE 3.0f
 
 class GrassRenderer {
 public:
@@ -28,6 +27,7 @@ private:
   unsigned long startTime;
 
   Mesh grassMesh;
+  Mesh lowPolyGrassMesh;
   
   std::vector<GrassChunk> grassChunks;
 };
