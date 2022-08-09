@@ -14,7 +14,7 @@ class GrassChunk {
 public:
   GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity);
   void render(const Mesh &grassMesh, const Frustum &camFrustum);
-  float getDistanceFromCamera(const glm::vec3 &cameraPos) const;
+  [[nodiscard]] float getDistanceFromCamera(const glm::vec3 &cameraPos) const;
 private:
   unsigned int numGrassBlades;
   AABB chunkBoundingBox;

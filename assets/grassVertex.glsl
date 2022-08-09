@@ -16,11 +16,11 @@ uniform mat4 viewMatrix;
 uniform float time;
 
 out float height;
-
+out vec4 eyeSpacePosition;
 
 mat4 rotationY( in float angle ) {
 	return mat4(cos(angle), 0,      sin(angle),	0,
-			 				0,		      1.0,	  0,	        0,
+              0,		      1.0,	  0,	        0,
 					   -sin(angle),	0,		  cos(angle),	0,
 							0, 		      0,			0,	        1);
 }
@@ -50,4 +50,6 @@ void main() {
   finalPosition += vec3(displacement.x + localWindVariance, 0, displacement.y + localWindVariance) * (height*height) * windDisplacement;
 
   gl_Position = projMatrix * viewMatrix * vec4(finalPosition, 1.0);
+
+  eyeSpacePosition = viewMatrix * vec4(finalPosition, 1.0);
 }

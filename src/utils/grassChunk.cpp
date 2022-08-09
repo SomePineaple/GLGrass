@@ -7,7 +7,7 @@ GrassChunk::GrassChunk(glm::vec2 grassStart, glm::vec2 grassStop, float scarcity
   std::uniform_real_distribution<float> distr(-scarcity/2.0f, scarcity/2.0f);
 
   const glm::vec2 area = glm::abs(grassStop - grassStart);
-  numGrassBlades = (area.x / scarcity) * (area.y / scarcity);
+  numGrassBlades = (unsigned int) ((area.x / scarcity) * (area.y / scarcity));
 
   grassPositions = new glm::vec2[numGrassBlades];
   

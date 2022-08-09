@@ -26,7 +26,7 @@ GrassRenderer::GrassRenderer(glm::vec2 grassStart, glm::vec2 grassStop, float sc
 }
 
 void GrassRenderer::renderGrass(const Camera &camera) {
-  Frustum camFrustum = createFrustumFromCamera(camera, CAMERA_ZNEAR, 4.0f);
+  Frustum camFrustum = createFrustumFromCamera(camera, CAMERA_ZNEAR, 7.0f);
 
   grassShader.bind();
   grassShader.setMat4(projectionMatrixUBO, camera.getProjectionMatrix());
