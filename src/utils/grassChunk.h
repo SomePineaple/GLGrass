@@ -16,7 +16,7 @@ public:
   void render(const Mesh &grassMesh, const Frustum &camFrustum);
   [[nodiscard]] float getDistanceFromCamera(const glm::vec3 &cameraPos) const;
 private:
-  unsigned int numGrassBlades;
+  long numGrassBlades;
   AABB chunkBoundingBox;
   glm::vec2 * grassPositions;
 };
