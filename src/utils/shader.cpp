@@ -54,19 +54,19 @@ unsigned int Shader::createShader(const char * path, unsigned int type) {
   return shaderID;
 }
 
-unsigned int Shader::getUniformLocation(const char * uniformName) {
+int Shader::getUniformLocation(const char * uniformName) const {
   return glGetUniformLocation(shaderProgramID, uniformName);
 }
 
-void Shader::setMat4(unsigned int uniformLocation, glm::mat4 mat) {
+void Shader::setMat4(int uniformLocation, glm::mat4 mat) {
   glUniformMatrix4fv(uniformLocation, 1, false, glm::value_ptr(mat));
 }
 
-void Shader::setFloat(unsigned int uniformLocation, float value) {
+void Shader::setFloat(int uniformLocation, float value) {
   glUniform1f(uniformLocation, value);
 }
 
-void Shader::bind() {
+void Shader::bind() const {
   glUseProgram(shaderProgramID);
 }
 

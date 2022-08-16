@@ -5,14 +5,14 @@
 
 class Mesh {
 public:
-  Mesh(const char * objPath);
+  explicit Mesh(const char * objPath);
   void bind() const;
   void render() const;
   void renderInstanced(unsigned int instanceCount) const;
-  void unbind() const;
+  static void unbind() ;
 private:
-  std::vector<Utils::Vertex> verticies;
-  unsigned int vaoID;
+  std::vector<Utils::Vertex> vertices;
+  unsigned int vaoID = 0;
 };
 
 #endif // MESH_H

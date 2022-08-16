@@ -20,9 +20,9 @@ public:
 private:
   Shader grassShader;
   unsigned int positionsSSBO;
-  unsigned int projectionMatrixUBO;
-  unsigned int viewMatrixUBO;
-  unsigned int timeUBO;
+  int projectionMatrixUBO;
+  int viewMatrixUBO;
+  int timeUBO;
 
   unsigned long startTime;
 

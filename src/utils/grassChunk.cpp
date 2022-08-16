@@ -33,6 +33,6 @@ void GrassChunk::render(const Mesh &grassMesh, const Frustum &camFrustum) {
   if (!chunkBoundingBox.isOnFrustum(camFrustum))
     return;
 
-  glBufferData(GL_SHADER_STORAGE_BUFFER, numGrassBlades * sizeof(glm::vec2), grassPositions, GL_STATIC_DRAW);
+  glBufferData(GL_SHADER_STORAGE_BUFFER, (long) (numGrassBlades * sizeof(glm::vec2)), grassPositions, GL_STATIC_DRAW);
   grassMesh.renderInstanced(numGrassBlades);
 }

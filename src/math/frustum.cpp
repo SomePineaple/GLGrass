@@ -1,5 +1,7 @@
 #include "frustum.h"
 
+// Most of this code is taken from the guest article on frustum culling on learnopengl.com.
+
 Frustum createFrustumFromCamera(const Camera &cam, float zNear, float zFar) {
   Frustum frustum;
 

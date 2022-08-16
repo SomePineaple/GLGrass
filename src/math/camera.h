@@ -8,21 +8,21 @@
 #define CAMERA_FOV 90.0f
 #define CAMERA_ZNEAR 0.001f
 #define CAMERA_ZFAR 100.0f
-#define CAMERA_SPEED 0.03f;
+#define CAMERA_SPEED 0.3f
 
 class Camera {
 public:
   Camera(glm::vec3 position, glm::vec3 direction, int width, int height);
 
-  void updateCameraPosition(GLFWwindow *window);
+  void updateCameraPosition(GLFWwindow *window, double deltaTime);
   void updateSize(int width, int height);
 
-  glm::mat4 getProjectionMatrix() const;
-  glm::mat4 getViewMatrix() const;
-  float getAspect() const;
-  glm::vec3 getDirection() const;
-  glm::vec3 getPosition() const;
-  glm::vec3 getRightVector() const;
+  [[nodiscard]] glm::mat4 getProjectionMatrix() const;
+  [[nodiscard]] glm::mat4 getViewMatrix() const;
+  [[nodiscard]] float getAspect() const;
+  [[nodiscard]] glm::vec3 getDirection() const;
+  [[nodiscard]] glm::vec3 getPosition() const;
+  [[nodiscard]] glm::vec3 getRightVector() const;
 private:
   glm::vec3 position, direction;
   int width, height;

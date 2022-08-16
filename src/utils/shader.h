@@ -7,14 +7,14 @@ class Shader {
 public:
   Shader(const char * vertPath, const char * fragPath);
 
-  unsigned int getUniformLocation(const char * uniformName);
-  void setMat4(unsigned int uniformLocation, glm::mat4 mat);
-  void setFloat(unsigned int uniformLocation, float value);
+  int getUniformLocation(const char * uniformName) const;
+  static void setMat4(int uniformLocation, glm::mat4 mat);
+  static void setFloat(int uniformLocation, float value);
 
-  void bind();
-  void unbind();
+  void bind() const;
+  static void unbind();
 private:
-  unsigned int createShader(const char * path, unsigned int type);
+  static unsigned int createShader(const char * path, unsigned int type);
 
   unsigned int shaderProgramID;
 };

@@ -22,6 +22,7 @@ int main() {
 
   GLFWwindow * window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "GLGrass", nullptr, nullptr);
   glfwMakeContextCurrent(window);
+  glfwSwapInterval(0);
 
   if (gl3wInit()) {
     std::cerr << "Failed to init gl3w" << std::endl;
@@ -33,8 +34,8 @@ int main() {
   GrassRenderer grassRenderer(glm::vec2(0, 0), glm::vec2(100, 100), 0.008);
   Camera mainCamera(glm::vec3(50, 0.2, 50), glm::vec3(1, 0, 0), WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  unsigned int projectionLocation = mainShader.getUniformLocation("projMatrix");
-  unsigned int viewLocation = mainShader.getUniformLocation("viewMatrix");
+  int projectionLocation = mainShader.getUniformLocation("projMatrix");
+  int viewLocation = mainShader.getUniformLocation("viewMatrix");
 
   glClearColor(1, 1, 1, 1);
 
@@ -42,24 +43,32 @@ int main() {
   unsigned long lastFpsDisplay = 0;
 
   glEnable(GL_DEPTH_TEST);
+
+  unsigned long lastFrameTime = 0;
   while (!glfwWindowShouldClose(window)) {
+    double frameTime = ((double)Utils::currentTimeMillis() - (double) lastFrameTime) / 1000.0;
+    lastFrameTime = Utils::currentTimeMillis();
+
     glfwPollEvents();
 
-    mainCamera.updateCameraPosition(window);
+    mainCamera.updateCameraPosition(window, frameTime);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render floor
     mainShader.bind();
-    mainShader.setMat4(projectionLocation, mainCamera.getProjectionMatrix());
-    mainShader.setMat4(viewLocation, Camera(glm::vec3(0, mainCamera.getPosition().y, 0), mainCamera.getDirection(), WINDOW_WIDTH, WINDOW_HEIGHT).getViewMatrix());
+    Shader::setMat4(projectionLocation, mainCamera.getProjectionMatrix());
+    // The view matrix for the floor doesn't include the camera's xy position, and so the camera is centered on the
+    // floor at all times. This works because its just one flat square, and now we don't need it to be massive and cover
+    // the entire field of grass.
+    Shader::setMat4(viewLocation, Camera(glm::vec3(0, mainCamera.getPosition().y, 0), mainCamera.getDirection(), WINDOW_WIDTH, WINDOW_HEIGHT).getViewMatrix());
 
     floorMesh.bind();
 
     floorMesh.render();
 
     floorMesh.unbind();
-    mainShader.unbind();
+    Shader::unbind();
 
     // Render grass now
     grassRenderer.renderGrass(mainCamera);

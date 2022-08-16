@@ -2,22 +2,22 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(glm::vec3 position, glm::vec3 direction, int width, int height) {
-  this->position = position;
-  this->direction = direction;
+Camera::Camera(glm::vec3 position, glm::vec3 direction, int width, int height) : position(position), direction(direction) {
   this->width = width;
   this->height = height;
 }
 
-void Camera::updateCameraPosition(GLFWwindow *window) {
+void Camera::updateCameraPosition(GLFWwindow *window, double deltaTime) {
+  float travelDistance = CAMERA_SPEED * (float) deltaTime;
+
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    position += direction * CAMERA_SPEED;
+    position += direction * travelDistance;
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    position -= direction * CAMERA_SPEED;
+    position -= direction * travelDistance;
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    position -= glm::normalize(glm::cross(direction, CAMERA_UP)) * CAMERA_SPEED;
+    position -= glm::normalize(glm::cross(direction, CAMERA_UP)) * travelDistance;
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    position += glm::normalize(glm::cross(direction, CAMERA_UP)) * CAMERA_SPEED;
+    position += glm::normalize(glm::cross(direction, CAMERA_UP)) * travelDistance;
 }
 
 void Camera::updateSize(int width, int height) {
